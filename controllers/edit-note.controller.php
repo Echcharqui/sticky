@@ -1,8 +1,7 @@
 <?php
-
+require_once(__DIR__ . "../../models/Note.model.php");
 require_once(__DIR__ . "../../validations/add-note.validation.php");
 
-$pwd = "edit-note";
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $id = isset($_GET['id']) ? $_GET['id'] : '';
@@ -16,20 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         require_once(__DIR__ . "../../views/edit-note.view.php");
     } else {
         try {
-            $database = new Database();
+            $note = new Note();
 
-            $userId = $_SESSION['user_id']; // Replace with actual user_id
-
-            $sql = "UPDATE Notes SET title = :title, content = :content, color = :color WHERE id = :id AND user_id = :user_id";
-            $params = [
-                ':id' => $id,
-                ':user_id' => $userId,
-                ':title' => $title,
-                ':content' => $noteContent,
-                ':color' => $noteColor
-            ];
-
-            $database->execute($sql, $params);
+            $note->updateOneNote($id, $title, $noteContent, $noteColor);
 
             // Set success message and redirect
             $_SESSION['success'] = 'Note updated successfully!';
@@ -42,17 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     }
 } else {
     $id = isset($_GET['id']) ? $_GET['id'] : '';
+
     try {
-        $database = new Database();
 
-        $userId = $_SESSION['user_id']; // Replace with actual user_id
+        $note = new Note();
 
-        $note = $database->fetch("SELECT * FROM Notes WHERE id = :id AND user_id = :user_id", [
-            ':id' => $id,
-            ':user_id' => $userId
-        ]);
+        $statement = $note->getOneNote($id);
 
-        if (!$note) {
+        if (!$statement) {
             abort(404);
         }
 

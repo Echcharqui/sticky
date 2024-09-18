@@ -1,5 +1,7 @@
-<?php require_once(__DIR__ . "../../layouts/header.php") ?>
-<?php require_once(__DIR__ . "../../partials/navBar.php") ?>
+
+<?php $title = generateHeadTitle(""); ?>
+
+<?php ob_start(); ?>
 
 <!-- secction button to add a note -->
 <section class="section add">
@@ -93,4 +95,6 @@
     ?>
 <?php endif; ?>
 
-<?php require_once(__DIR__ . "../../layouts/footer.php") ?>
+<?php $content = ob_get_clean(); ?>
+
+<?php require_once(__DIR__ . "../../template/layout/layout.php") ?>

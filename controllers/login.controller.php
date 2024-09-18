@@ -1,8 +1,7 @@
 <?php
-
+require_once(__DIR__ . "../../models/User.model.php");
 require_once(__DIR__ . "../../validations/loging.validation.php");
 
-$pwd = "login";
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $email = isset($_POST['email']) ? $_POST['email'] : '';
@@ -14,18 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         require_once(__DIR__ . "../../views/login.view.php");
     } else {
         try {
-            $db = new Database();
+            $user = new User();
 
-            $sqlQuery = "select * from Users where email = :email;";
-            $params = ['email' => $email];
+            $theAccount = $user->findByEmail($email);
 
-            $theAccount = $db->fetch($sqlQuery, $params);
-
-            if ($theAccount && password_verify($password, $theAccount['password'])) {
+            if ($theAccount && $user->verifyPassword($password, $theAccount['password'])) {
                 // Password is correct
-                session_start();
                 $_SESSION['user_id'] = $theAccount['id'];
-
                 // Redirect to the home page or another appropriate page
                 header("Location: /");
                 exit();

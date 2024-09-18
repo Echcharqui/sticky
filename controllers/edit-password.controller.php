@@ -1,10 +1,8 @@
 <?php
-
+require_once(__DIR__ . "../../models/User.model.php");
 require_once(__DIR__ . "../../validations/edit-password.validation.php");
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-    session_start(); // Start session if not already started
-
     $userId = $_SESSION['user_id']; // Assuming user ID is stored in session
     $oldPassword = isset($_POST['old-password']) ? $_POST['old-password'] : '';
     $newPassword = isset($_POST['new-password']) ? $_POST['new-password'] : '';
@@ -18,36 +16,26 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         die();
     } else {
         try {
-            $db = new Database();
+            $user = new User();
 
-            // Fetch the current password hash from the database
-            $user = $db->fetch("SELECT password FROM Users WHERE id = :id", ['id' => $userId]);
+            // Fetch the current user to extract the password and verifyed it
+            $theUser = $user->findById($userId);
 
-            if (!$user) {
+            if (!$theUser) {
                 $_SESSION['errors'] = 'User not found !';
                 header("Location: /settings");
                 die();
             }
 
             // Verify the old password
-            if (!password_verify($oldPassword, $user['password'])) {
+            if (!$user->verifyPassword($oldPassword, $theUser['password'])) {
                 $_SESSION['errors'] = 'Old password is incorrect !';
                 header("Location: /settings");
                 die();
             }
 
-            // Hash the new password
-            $hashedNewPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-
-            // SQL query to update the password in the database
-            $sql = "UPDATE Users SET password = :password WHERE id = :id";
-            $params = [
-                'password' => $hashedNewPassword,
-                'id' => $userId
-            ];
-
             // Update the user's password in the database
-            $db->execute($sql, $params);
+            $user->changePassword($newPassword);
 
             // After successfully updating the password
             $_SESSION['success'] = 'Password updated successfully!';

@@ -1,5 +1,5 @@
 <?php
-
+require_once(__DIR__ . "../../models/User.model.php");
 require_once(__DIR__ . "../../validations/avatar-editing.validation.php");
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
@@ -7,8 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $avatar = isset($_FILES['avatar']) ? $_FILES['avatar'] : '';
 
     $errors = avatarValidation($_FILES);
-
-    $userId = $_SESSION["user_id"];
 
     if (!empty($errors)) {
         require_once(__DIR__ . '/../views/settings.view.php');
@@ -25,16 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
 
             if (move_uploaded_file($avatar['tmp_name'], $uploadFile)) {
 
-                $database = new Database();
+                $user = new User();
 
-                // File upload successful, update the user's avatar in the database
-                $sql = "UPDATE Users SET avatar = :avatar WHERE id = :id";
-                $params = [
-                    ':avatar' => "/assets/uploads/avatars/" . $avatarFileName,
-                    ':id' => $userId
-                ];
-
-                $database->execute($sql, $params);
+                $user->updateAvatar($avatarFileName);
 
                 // After successfully updating the password
                 $_SESSION['success'] = 'avatar updated successfully!';

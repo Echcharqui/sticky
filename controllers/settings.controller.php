@@ -1,16 +1,13 @@
 <?php
 
-
-$pwd = "settings";
+require_once(__DIR__ . "../../models/User.model.php");
 
 try {
-    $database = new Database();
+    $user = new User();
 
     $userId = $_SESSION['user_id']; // Replace with actual user_id
 
-    $userInfo = $database->fetch("SELECT username, email, avatar FROM Users WHERE id = :id", [
-        ':id' => $userId,
-    ]);
+    $userInfo = $user->findById($userId);
 
     if (!$userInfo) {
         abort(404);

@@ -1,5 +1,6 @@
-<?php require_once(__DIR__ . "../../layouts/header.php") ?>
-<?php require_once(__DIR__ . "../../partials/navBar.php") ?>
+<?php $title = generateHeadTitle("registration"); ?>
+
+<?php ob_start(); ?>
 
 <div class="registration-page container">
 
@@ -54,5 +55,6 @@
 
 </div>
 
+<?php $content = ob_get_clean(); ?>
 
-<?php require_once(__DIR__ . "../../layouts/footer.php") ?>
+<?php require_once(__DIR__ . "../../template/layout/layout.php") ?>

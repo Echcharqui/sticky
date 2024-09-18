@@ -14,9 +14,9 @@ function urlIs($value)
     return  parse_url($_SERVER["REQUEST_URI"])["path"] === $value;
 }
 
-function generateHeadTitle($pwd)
+function generateHeadTitle($title)
 {
-    return strlen($pwd) > 0 ? "Sticky - " . $pwd : 'Sticky';
+    return strlen($title) > 0 ? "Sticky - " . $title : 'Sticky';
 }
 
 function abort($errorCode = 404): void
@@ -38,7 +38,6 @@ function abort($errorCode = 404): void
 
 function registrationSuccessful()
 {
-    $pwd = "registration successful";
     require_once(__DIR__ . '/../views/registration-successful.view.php');
     die();
 }

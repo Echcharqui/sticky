@@ -1,6 +1,6 @@
-<?php require_once(__DIR__ . "../../layouts/header.php") ?>
-<?php require_once(__DIR__ . "../../partials/navBar.php") ?>
+<?php $title = generateHeadTitle("login"); ?>
 
+<?php ob_start(); ?>
 
 <div class="login-page container">
     <section class="section">
@@ -36,5 +36,6 @@
     </section>
 </div>
 
+<?php $content = ob_get_clean(); ?>
 
-<?php require_once(__DIR__ . "../../layouts/footer.php") ?>
+<?php require_once(__DIR__ . "../../template/layout/layout.php") ?>

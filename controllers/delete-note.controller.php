@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . "../../models/Note.model.php");
 
 $noteId = isset($_GET['id']) ? $_GET['id'] : null;
 $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
@@ -9,19 +10,14 @@ if (!$noteId || !$userId) {
 }
 
 try {
-    $database = new Database();
+    $note = new Note();
 
     // Fetch the note to check if it exists and belongs to the user
-    $note = $database->fetch("SELECT * FROM Notes WHERE id = :id AND user_id = :user_id", [
-        ':id' => $noteId,
-        ':user_id' => $userId
-    ]);
+    $theNote = $note->getOneNote($noteId);
 
-    if ($note) {
+    if ($theNote) {
         // Delete the note
-        $rowsAffected = $database->execute("DELETE FROM Notes WHERE id = :id", [
-            ':id' => $noteId
-        ]);
+        $rowsAffected = $note->deleteOneNote($noteId);
 
         if ($rowsAffected > 0) {
             error_log("Note deleted successfully: ID $noteId by User $userId.");

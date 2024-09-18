@@ -2,10 +2,10 @@
 
 class Database
 {
-    private $host = '';
-    private $db_name = '';
-    private $username = '';
-    private $password = '';
+    private $host = 'localhost';
+    private $db_name = 'NotesApp';
+    private $username = 'hotelecho';
+    private $password = 'node@19941982';
     private $conn;
 
     public function __construct()

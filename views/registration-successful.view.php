@@ -1,5 +1,6 @@
-<?php require_once(__DIR__ . "../../layouts/header.php"); ?>
-<?php require_once(__DIR__ . "../../partials/navBar.php"); ?>
+<?php $title = generateHeadTitle("registration successful"); ?>
+
+<?php ob_start(); ?>
 
 <div class="error-page">
 
@@ -18,4 +19,7 @@
 
 </div>
 
-<?php require_once(__DIR__ . "../../layouts/footer.php"); ?>
+
+<?php $content = ob_get_clean(); ?>
+
+<?php require_once(__DIR__ . "../../template/layout/layout.php") ?>

@@ -1,9 +1,6 @@
 <?php
-
+require_once(__DIR__ . "../../models/User.model.php");
 require_once(__DIR__ . "../../validations/registration.validation.php");
-
-
-$pwd = "registration";
 
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
@@ -18,30 +15,17 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         require_once(__DIR__ . "../../views/registration.view.php");
     } else {
         try {
-            $db = new Database();
+            $user = new User();
 
             // Check if the email already exists
-            $existingUser = $db->fetch("SELECT * FROM Users WHERE email = :email", ['email' => $email]);
+            $existingUser = $user->findByEmail($email);
 
             if ($existingUser) {
                 $errors['email'] = 'Email already exists';
                 require_once(__DIR__ . "../../views/registration.view.php");
             } else {
-                // Hash the password
-                $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
-                // SQL query to insert the note into the database
-                $sql = "INSERT INTO Users (email, username, password) VALUES (:email, :username, :password)";
-                $params = [
-                    'email' => $email,
-                    'username' => $username,
-                    'password' => $hashedPassword
-                ];
-
-
-                // Insert the new user into the database
-                $db->execute($sql, $params);
-
+                // insertion of a new user
+                $user->insertNewUser($email, $username, $password);
                 // Redirect to the login page or another appropriate page
                 registrationSuccessful();
             }

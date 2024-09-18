@@ -1,8 +1,7 @@
 <?php
-
+require_once(__DIR__ . "../../models/Note.model.php");
 require_once(__DIR__ . "../../validations/add-note.validation.php");
 
-$pwd = "add-note";
 
 // Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
@@ -17,26 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     // If there are validation errors, display the form with errors
     if (!empty($errors)) {
         require_once(__DIR__ . "../../views/add-note.view.php");
-    } else {
+    } else {    
         try {
             // Create a new database instance and establish a connection
-            $database = new Database();
+            $note = new Note();
 
-            // Assuming user_id is available from session or other means
-            $userId = $_SESSION['user_id']; // Replace with actual user_id
-
-            // SQL query to insert the note into the database
-            $sql = "INSERT INTO Notes (user_id, title, content, color) VALUES (:user_id, :title, :content, :color)";
-            $params = [
-                ':user_id' => $userId,
-                ':title' => $title,
-                ':content' => $noteContent,
-                ':color' => $noteColor
-            ];
-
-            // Execute the SQL query with the parameters
-            $database->execute($sql, $params);
-
+            $note->addNewNote($title, $noteContent, $noteColor);
 
             // Set success message and redirect
             $_SESSION['success'] = 'New note added successfully!';

@@ -1,5 +1,6 @@
-<?php require_once(__DIR__ . "../../layouts/header.php") ?>
-<?php require_once(__DIR__ . "../../partials/navBar.php") ?>
+<?php $title = generateHeadTitle("add a new note"); ?>
+
+<?php ob_start(); ?>
 
 <div class="the-form-container container">
     <div class="content">
@@ -59,4 +60,6 @@
     </div>
 </div>
 
-<?php require_once(__DIR__ . "../../layouts/footer.php") ?>
+<?php $content = ob_get_clean(); ?>
+
+<?php require_once(__DIR__ . "../../template/layout/layout.php") ?>

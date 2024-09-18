@@ -1,5 +1,5 @@
 <?php
-
+require_once(__DIR__ . "../../models/User.model.php");
 require_once(__DIR__ . "../../validations/edit-user-info.validation.php");
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
@@ -13,13 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         require_once(__DIR__ . "../../views/settings.view.php");
     } else {
         try {
-            $db = new Database();
+            $user = new User();
 
             // Check if the email already exists for another user
-            $existingUser = $db->fetch("SELECT id FROM Users WHERE email = :email AND id != :id", [
-                'email' => $email,
-                'id' => $userId
-            ]);
+            $existingUser =  $user->checkIfEmailIsUsedByAnotherUser($email);
 
             if ($existingUser) {
                 $_SESSION['errors'] = 'Email already in use by another account!';
@@ -28,15 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             }
 
             // SQL query to update the user info in the database
-            $sql = "UPDATE Users SET email = :email, username = :username WHERE id = :id";
-            $params = [
-                'email' => $email,
-                'username' => $username,
-                'id' => $userId
-            ];
-
-            // Execute the update
-            $db->execute($sql, $params);
+            $user->updateUserInfo($email, $username);
 
             // Set success message and redirect
             $_SESSION['success'] = 'User info updated successfully!';
