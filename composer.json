@@ -1,0 +1,16 @@
+{
+  "name": "hotel-echo/php",
+  "description": "Sticky Notes is a PHP-based web application designed for managing personal notes. This version (1.0.0) introduces core functionality, including user registration, login, note management, and user settings.",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "HotelEcho\\Php\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Echcharqui Hamza"
+    }
+  ],
+  "require": {}
+}

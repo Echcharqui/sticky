@@ -1,3 +1,5 @@
 # Ignore all image files in assets/uploads/avatars except default.png
 assets/uploads/avatars/*
 !assets/uploads/avatars/default.png
+
+/vendor/
