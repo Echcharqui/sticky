@@ -8,10 +8,10 @@ use HotelEcho\Php\Utilities\Utilities;
 
 class Database
 {
-    private $host = 'localhost';
-    private $db_name = 'NotesApp';
-    private $username = 'hotelecho';
-    private $password = 'node@19941982';
+    private $host = '';
+    private $db_name = '';
+    private $username = '';
+    private $password = '';
     private $conn;
 
     public function __construct()
