@@ -41,7 +41,7 @@ To set up the Sticky Notes App locally:
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/sticky-notes-app.git
+   git clone https://github.com/Echcharqui/sticky-notes-app.git
    ```
 
 2. **Navigate to the project directory:**
@@ -130,6 +130,40 @@ Here's an overview of the project structure:
     ├── registration-successful.view.php
     ├── registration.view.php
     └── settings.view.php
+```
+## Create database
+
+Here's how to create the Sticky Notes database:
+
+```sql
+-- Create the Sticky Notes database
+CREATE DATABASE sticky_notes_app;
+
+-- Select the database
+USE sticky_notes_app;
+
+-- Create the Users table
+CREATE TABLE Users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    avatar VARCHAR(255),
+    isValid TINYINT(1) NOT NULL DEFAULT 0
+);
+
+-- Create the Notes table
+CREATE TABLE Notes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    color ENUM('yellow accent-4','light-blue','pink lighten-1','blue-grey darken-1','orange lighten-1'),
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
+);
 ```
 
 ## Contributing
