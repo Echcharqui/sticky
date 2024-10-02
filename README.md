@@ -9,6 +9,7 @@ Sticky Notes is a PHP-based web application designed for managing personal notes
 - [Installation](#installation)
 - [Usage](#usage)
 - [File Structure](#file-structure)
+- [Database Setup](#database-setup)
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
@@ -30,6 +31,7 @@ Sticky Notes is a PHP-based web application designed for managing personal notes
   - **PHP:** Server-side logic and page rendering.
   - **MVC Pattern:** Organized codebase with controllers, views, and utilities.
   - **Database:** MySQL (or similar) for data persistence, managed via `Database.php`.
+  - **Composer:** Dependency management for the project using `composer.json`.
   
 - **Validation:**
   - Custom PHP scripts for form and data validation.
@@ -48,6 +50,12 @@ To set up the Sticky Notes App locally:
 
    ```bash
    cd sticky-notes-app
+   ```
+
+2. **Install dependencies via Composer:**
+
+   ```bash
+   composer install
    ```
 
 3. **Set up the Database:**
@@ -87,49 +95,55 @@ Here's an overview of the project structure:
 │   ├── main-D_J3YjDD.js
 │   └── uploads
 │       └── avatars
-├── controllers
-│   ├── add-note.controller.php
-│   ├── delete-note.controller.php
-│   ├── edit-avatar.controller.php
-│   ├── edit-note.controller.php
-│   ├── edit-password.controller.php
-│   ├── edit-user-info.controller.php
-│   ├── home.controller.php
-│   ├── login.controller.php
-│   ├── logout.controller.php
-│   ├── registration.controller.php
-│   └── settings.controller.php
-├── database
-│   └── Database.php
+│           └── default.png
+├── composer.json
 ├── index.php
-├── layouts
-│   ├── footer.php
-│   └── header.php
 ├── LICENSE
-├── partials
-│   └── navBar.php
 ├── README.md
-├── router.php
-├── util
-│   └── util.php
-├── validations
-│   ├── add-note.validation.php
-│   ├── avatar-editing.validation.php
-│   ├── edit-password.validation.php
-│   ├── edit-user-info.validation.php
-│   ├── login.validation.php
-│   └── registration.validation.php
-└── views
-    ├── 403.view.php
-    ├── 404.view.php
-    ├── 500.view.php
-    ├── add-note.view.php
-    ├── edit-note.view.php
-    ├── home.view.php
-    ├── login.view.php
-    ├── registration-successful.view.php
-    ├── registration.view.php
-    └── settings.view.php
+├── .gitignore
+├── src
+│   ├── controllers
+│   │   ├── add-note.controller.php
+│   │   ├── delete-note.controller.php
+│   │   ├── edit-avatar.controller.php
+│   │   ├── edit-note.controller.php
+│   │   ├── edit-password.controller.php
+│   │   ├── edit-user-info.controller.php
+│   │   ├── home.controller.php
+│   │   ├── login.controller.php
+│   │   ├── logout.controller.php
+│   │   ├── registration.controller.php
+│   │   └── settings.controller.php
+│   ├── Database
+│   │   └── Database.php
+│   ├── Models
+│   │   ├── Notes.php
+│   │   └── Users.php
+│   ├── router.php
+│   ├── template
+│   │   └── layout
+│   │       └── layout.php
+│   ├── Utilities
+│   │   └── Utilities.php
+│   ├── validations
+│   │   ├── add-note.validation.php
+│   │   ├── avatar-editing.validation.php
+│   │   ├── edit-password.validation.php
+│   │   ├── edit-user-info.validation.php
+│   │   ├── loging.validation.php
+│   │   └── registration.validation.php
+│   └── views
+│       ├── 403.view.php
+│       ├── 404.view.php
+│       ├── 500.view.php
+│       ├── add-note.view.php
+│       ├── edit-note.view.php
+│       ├── home.view.php
+│       ├── login.view.php
+│       ├── registration-successful.view.php
+│       ├── registration.view.php
+│       └── settings.view.php
+
 ```
 ## Create database
 
